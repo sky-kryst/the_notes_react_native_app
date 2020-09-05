@@ -3,3 +3,4 @@ node_modules
 .eslintrc
 .prettierrc
 assets/*
+debug.log

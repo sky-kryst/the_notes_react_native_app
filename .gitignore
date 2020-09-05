@@ -4,3 +4,4 @@ node_modules
 .prettierrc
 assets/*
 debug.log
+the-notes-app.jks

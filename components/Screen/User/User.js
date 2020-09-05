@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import {
   SafeAreaView,
   Text,
@@ -12,7 +12,7 @@ import { useStore } from '../../../hooks-store/store'
 import styles from './User.style'
 import gql from 'graphql-tag'
 import useLogout from '../../../hooks/useLogout'
-import { useQuery, useMutation } from '@apollo/react-hooks'
+import { useLazyQuery, useMutation } from '@apollo/react-hooks'
 import Display from './Display'
 import image from '../../../assets/add-header.png'
 
@@ -83,7 +83,7 @@ const User = ({ navigation }) => {
     }
   }
 
-  const { loading, data, refetch } = useQuery(GET_ME, {
+  const [getMe, { loading, data, refetch }] = useLazyQuery(GET_ME, {
     onError: err =>
       Alert.alert(
         'Error!',
@@ -98,6 +98,10 @@ const User = ({ navigation }) => {
         { cancelable: true }
       ),
   })
+
+  useEffect(() => {
+    if (token) getMe()
+  }, [token])
 
   if (token) {
     if (loading || updating) {
@@ -210,7 +214,9 @@ const User = ({ navigation }) => {
 
   return (
     <View style={styles.Home}>
-      <Text>You must login to view this page.</Text>
+      <Text style={{ alignSelf: 'center' }}>
+        You must login to view this page.
+      </Text>
     </View>
   )
 }

@@ -8,7 +8,7 @@ let canFetch = true
 
 const useFeed = (query, check) => {
   const { token, userId } = useStore()[0].details
-  const { searchValue } = useStore()[0].search
+  const { value: searchValue } = useStore()[0].search
   const [refreshing, setRefreshing] = useState(false)
   const [fetching, setFetching] = useState(false)
   const [type, setType] = useState('recent')

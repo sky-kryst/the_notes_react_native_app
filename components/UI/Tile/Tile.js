@@ -11,6 +11,7 @@ import {
   assignTitle,
   assignBody,
 } from '../../../shared/sendNotification'
+import { useStore } from '../../../hooks-store/store'
 
 const SEND_REQUEST = gql`
   mutation SendRequest($data: requestInputs!) {
@@ -97,6 +98,8 @@ const Tile = ({
   token,
   userId,
 }) => {
+  const Dispatch = useStore(false)[1]
+
   const [{ Likes, Liked, Published }, dispatch] = useReducer(reducer, {
     Likes: likes.length,
     Liked: IDPresent(userId, likes),
@@ -149,7 +152,7 @@ const Tile = ({
       } = sendRequest
       sendNotification(
         creator.notificationToken,
-        `New  ${type.toLowerCase()} request!`,
+        `New ${type.toLowerCase()} request!`,
         `${firstName} ${lastName} has sent a request to ${type.toLowerCase()} '${assignTitle(
           title
         )}'`
@@ -222,6 +225,7 @@ const Tile = ({
         { cancelable: false }
       )
     }
+    Dispatch('REMOVE_SEARCH_VALUE')
     return navigation.navigate(to, { id, title, body })
   }
 

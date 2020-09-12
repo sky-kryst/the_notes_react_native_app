@@ -54,7 +54,7 @@ const App = () => {
       })
 
       const wsLink = new WebSocketLink({
-        uri: `ws${url}`,
+        uri: `wss${url}`,
         options: {
           reconnect: true,
           ...(authToken && {

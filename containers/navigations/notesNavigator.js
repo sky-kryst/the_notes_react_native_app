@@ -19,11 +19,23 @@ import DrawerComponent from '../../components/UI/DrawerComponent/DrawerComponent
 import HeaderTitle from '../../components/UI/Header/HeaderTitle/HeaderTitle'
 import LeftHeaderButtons from '../../components/UI/Header/LeftHeaderButton/lHB'
 import RightHeaderButtons from '../../components/UI/Header/RightHeaderButtons/rHB'
-import { myNotes, topNavigatorOptions } from './commonScreens'
+import CreatedNotes from '../../components/Screen/CreatedNotes/CreatedNotes'
+import SharedNotes from '../../components/Screen/SharedNotes/SharedNotes'
 
 const NotesScreenNavigator = createBottomTabNavigator(
   {
-    ...myNotes,
+    createdNotesScreen: {
+      screen: CreatedNotes,
+      navigationOptions: {
+        title: 'Created',
+      },
+    },
+    sharedNotesScreen: {
+      screen: SharedNotes,
+      navigationOptions: {
+        title: 'Shared',
+      },
+    },
   },
   {
     tabBarOptions: {
@@ -34,7 +46,6 @@ const NotesScreenNavigator = createBottomTabNavigator(
       labelStyle: {
         fontSize: 15,
         marginBottom: 12,
-        textTransform: 'uppercase',
       },
     },
   }
@@ -46,7 +57,18 @@ const TabsNavigator = createMaterialTopTabNavigator(
     Notes: NotesScreenNavigator,
   },
   {
-    ...topNavigatorOptions,
+    navigationOptions: {
+      swipeEnabled: true,
+    },
+    tabBarOptions: {
+      style: {
+        backgroundColor: '#989898',
+      },
+      indicatorStyle: {
+        backgroundColor: '#505050',
+        height: 3,
+      },
+    },
   }
 )
 

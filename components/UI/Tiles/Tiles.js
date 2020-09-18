@@ -1,5 +1,5 @@
 import React from 'react'
-import { FlatList, Text, View } from 'react-native'
+import { FlatList, Text, View, RefreshControl, ScrollView } from 'react-native'
 import Tile from '../Tile/Tile'
 import styles from './Tiles.style'
 
@@ -15,11 +15,16 @@ const NoteTiles = ({
 }) => {
   if (data.length < 1) {
     return (
-      <View style={style}>
+      <ScrollView
+        onRefresh={
+          <RefreshControl onRefresh={refresh} refreshing={refreshing} />
+        }
+        contentContainerStyle={style}
+      >
         <Text style={{ alignSelf: 'center' }}>
           Sorry nothing to see here. Start creating!
         </Text>
-      </View>
+      </ScrollView>
     )
   }
   return (

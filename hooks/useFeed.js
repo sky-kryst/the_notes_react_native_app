@@ -1,6 +1,6 @@
 import { useQuery } from '@apollo/react-hooks'
-import { useCallback, useState } from 'react'
-import { Alert } from 'react-native'
+import { useCallback, useState, useEffect } from 'react'
+import { ToastAndroid, BackHandler } from 'react-native'
 import { useStore } from '../hooks-store/store'
 import NoDuplicateIDs from '../shared/noDuplicateIDs'
 
@@ -9,11 +9,21 @@ let canFetch = true
 const useFeed = (query, check) => {
   const { token, userId } = useStore()[0].details
   const { value: searchValue } = useStore()[0].search
+  const Dispatch = useStore(false)[1]
   const [refreshing, setRefreshing] = useState(false)
   const [fetching, setFetching] = useState(false)
   const [type, setType] = useState('recent')
   const [NOOfNotes, setNOOfNotes] = useState(0)
   const [reloading, setReloading] = useState(false)
+
+  useEffect(() => {
+    const backHandler = BackHandler.addEventListener('hardwareBackPress', () =>
+      searchValue !== ''
+        ? Dispatch('REMOVE_SEARCH_VALUE')
+        : BackHandler.exitApp()
+    )
+    return () => backHandler.remove()
+  }, [searchValue])
 
   const { loading, data, refetch, fetchMore } = useQuery(query, {
     skip: check && !token,
@@ -27,17 +37,10 @@ const useFeed = (query, check) => {
       setNOOfNotes(Object.values(data)[0].length)
     },
     onError: err =>
-      Alert.alert(
-        'Error!',
+      ToastAndroid.showWithGravity(
         err.message.split(':')[1],
-        [
-          {
-            text: 'Try Again',
-            onPress: () => onRefresh(),
-          },
-          { text: 'OK', onPress: () => {}, style: 'cancel' },
-        ],
-        { cancelable: true }
+        ToastAndroid.SHORT,
+        ToastAndroid.CENTER
       ),
   })
 

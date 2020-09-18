@@ -8,7 +8,7 @@ import {
   SafeAreaView,
   Text,
   View,
-  Alert,
+  ToastAndroid,
 } from 'react-native'
 import { Input, Button } from 'react-native-elements'
 import { withNavigation } from 'react-navigation'
@@ -47,17 +47,10 @@ const Login = ({ navigation }) => {
     onCompleted: ({ loginUser }) =>
       persistUserData(loginUser, { dispatch, client }),
     onError: err =>
-      Alert.alert(
-        'Error!',
+      ToastAndroid.showWithGravity(
         err.message.split(':')[1],
-        [
-          {
-            text: 'Try Again',
-            onPress: () => {},
-          },
-          { text: 'OK', onPress: () => navigation.goBack(), style: 'cancel' },
-        ],
-        { cancelable: true }
+        ToastAndroid.SHORT,
+        ToastAndroid.CENTER
       ),
   })
 

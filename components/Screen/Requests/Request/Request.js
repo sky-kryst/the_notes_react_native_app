@@ -1,7 +1,7 @@
 import { useMutation } from '@apollo/react-hooks'
 import gql from 'graphql-tag'
 import React, { useContext, useState } from 'react'
-import { Text, View, Alert } from 'react-native'
+import { Text, View, ToastAndroid } from 'react-native'
 import { Button } from 'react-native-elements'
 import { RequestsContext } from '../../../../Context/Requests'
 import styles from './request.style'
@@ -37,17 +37,10 @@ const Request = ({ id, accepted, type, title, creator, user, navigation }) => {
   const [respondRequest] = useMutation(RESPOND_REQUEST, {
     onError: err => {
       setReacted(false)
-      Alert.alert(
-        'Error!',
+      ToastAndroid.showWithGravity(
         err.message.split(':')[1],
-        [
-          {
-            text: 'Send Again',
-            onPress: () => navigation.navigate('Requests'),
-          },
-          { text: 'OK', onPress: () => {}, style: 'cancel' },
-        ],
-        { cancelable: true }
+        ToastAndroid.SHORT,
+        ToastAndroid.CENTER
       )
     },
     onCompleted: ({ respondRequest }) => {

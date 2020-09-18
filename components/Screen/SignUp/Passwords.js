@@ -5,7 +5,7 @@ import React from 'react'
 import {
   ActivityIndicator,
   KeyboardAvoidingView,
-  Alert,
+  ToastAndroid,
   View,
 } from 'react-native'
 import * as Yup from 'yup'
@@ -45,17 +45,10 @@ const SignUp = ({ navigation }) => {
       persistUserData(createUser, { dispatch, client })
     },
     onError: err =>
-      Alert.alert(
-        'Error!',
+      ToastAndroid.showWithGravity(
         err.message.split(':')[1],
-        [
-          {
-            text: 'Try Again',
-            onPress: () => {},
-          },
-          { text: 'OK', onPress: () => navigation.goBack(), style: 'cancel' },
-        ],
-        { cancelable: true }
+        ToastAndroid.SHORT,
+        ToastAndroid.CENTER
       ),
   })
 

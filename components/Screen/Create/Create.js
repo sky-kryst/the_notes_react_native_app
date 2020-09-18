@@ -6,6 +6,7 @@ import {
   TextInput,
   View,
   ActivityIndicator,
+  ToastAndroid,
   Alert,
 } from 'react-native'
 import styles from './Create.style'
@@ -137,21 +138,12 @@ const Create = ({ navigation }) => {
           note: { title, body, creator, collaborator, consumer, likes },
         },
       }),
-    onError: err => {
-      console.log(err)
-      Alert.alert(
-        'Error!',
+    onError: err =>
+      ToastAndroid.showWithGravity(
         err.message.split(':')[1],
-        [
-          {
-            text: 'Try Again',
-            onPress: () => {},
-          },
-          { text: 'OK', onPress: () => navigation.goBack(), style: 'cancel' },
-        ],
-        { cancelable: true }
-      )
-    },
+        ToastAndroid.SHORT,
+        ToastAndroid.CENTER
+      ),
   })
 
   const [updateNote, { loading: updating }] = useMutation(UPDATE_NOTE, {
@@ -166,17 +158,10 @@ const Create = ({ navigation }) => {
         },
       }),
     onError: err =>
-      Alert.alert(
-        'Error!',
+      ToastAndroid.showWithGravity(
         err.message.split(':')[1],
-        [
-          {
-            text: 'Try Again',
-            onPress: () => {},
-          },
-          { text: 'OK', onPress: () => navigation.goBack(), style: 'cancel' },
-        ],
-        { cancelable: true }
+        ToastAndroid.SHORT,
+        ToastAndroid.CENTER
       ),
   })
 

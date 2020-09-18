@@ -1,5 +1,11 @@
 import React from 'react'
-import { ActivityIndicator, Text, View } from 'react-native'
+import {
+  ActivityIndicator,
+  RefreshControl,
+  Text,
+  View,
+  ScrollView,
+} from 'react-native'
 import useFeed from '../../../hooks/useFeed'
 import AddButton from '../AddButton/AddButton'
 import Dropdown from '../Dropdown/Dropdown'

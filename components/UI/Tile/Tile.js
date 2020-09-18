@@ -163,17 +163,10 @@ const Tile = ({
   const [toggleLike] = useMutation(TOGGLE_LIKE, {
     onError: err => {
       updateLikes()
-      return Alert.alert(
-        'Error!',
+      return ToastAndroid.showWithGravity(
         err.message.split(':')[1],
-        [
-          {
-            text: 'Try Again',
-            onPress: () => {},
-          },
-          { text: 'OK', onPress: () => navigation.goBack(), style: 'cancel' },
-        ],
-        { cancelable: true }
+        ToastAndroid.SHORT,
+        ToastAndroid.CENTER
       )
     },
   })
